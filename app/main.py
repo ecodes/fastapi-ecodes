@@ -1,11 +1,6 @@
 from fastapi import FastAPI
+from app.routers import crm
 
-app = FastAPI()
+app = FastAPI(title="FastAPI Ecodes API")
 
-@app.get("/")
-def read_root():
-    return {"message": "API funcionando"}
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+app.include_router(crm.router)
