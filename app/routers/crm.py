@@ -1,12 +1,14 @@
 from fastapi import APIRouter
-from app.services.active_campaign import get_contacts, create_contact
+from app.services.active_campaign import get_contacts, get_contact_by_email
 
 router = APIRouter(prefix="/crm", tags=["CRM"])
 
-@router.get("/contacts")
+@router.get("/contacts", response_model=dict)
 def list_contacts():
+    """Obtiene la lista de contactos desde ActiveCampaign."""
     return get_contacts()
 
-@router.post("/contacts")
-def add_contact(email: str, first_name: str, last_name: str):
-    return create_contact(email, first_name, last_name)
+@router.get("/contacts/{email}", response_model=dict)
+def retrieve_contact(email: str):
+    """Obtiene la información de un contacto por email."""
+    return get_contact_by_email(email)
